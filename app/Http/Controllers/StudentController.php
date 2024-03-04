@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Validators\StudentValidator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Throwable;
@@ -24,12 +25,19 @@ class StudentController extends Controller
 
             DB::beginTransaction();
 
-            foreach ($data as $row) {
-                Student::create([
+            foreach ($data as $index => $row) {
+                $student = [
                     'name' => $row[0],
                     'latitude' => $row[1],
                     'longitude' => $row[2],
-                ]);
+                ];
+
+                $validator = StudentValidator::studentValidate($student);
+                if ($validator->fails()) {
+                    return response()->json(['error' => "Validation failed for row " . ($index + 2) . ": " . $validator->errors()->first()], 422);
+                }
+
+                Student::create($student);
             }
 
             DB::commit();
