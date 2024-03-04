@@ -21,7 +21,3 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // students
 Route::post('/students', [StudentController::class, 'storeStudents']);
-
-Route::get('/greeting', function () {
-    return 'Hello World';
-});
