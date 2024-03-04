@@ -23,6 +23,7 @@ class StudentController extends Controller
             // Remove the header from the data
             array_shift($data);
 
+            //** start DB */
             DB::beginTransaction();
 
             foreach ($data as $index => $row) {
@@ -41,6 +42,7 @@ class StudentController extends Controller
             }
 
             DB::commit();
+            //** end DB */
 
             return response()->json(['message' => 'Students data ingested successfully'], 200);
         } catch (Throwable $th) {
