@@ -19,6 +19,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/welcome', function () {
-    return Inertia::render('welcome-page');
+Route::get('/students', function () {
+    return Inertia::render('search-students-page');
 });
