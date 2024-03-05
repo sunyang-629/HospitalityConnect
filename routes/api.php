@@ -21,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // students
 Route::post('/students', [StudentController::class, 'storeStudents']);
+Route::get('/students/nearby', [StudentController::class, 'getNearbyStudents']);
