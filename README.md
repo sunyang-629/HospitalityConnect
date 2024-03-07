@@ -1,66 +1,85 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Hospitality Connect
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Overview
 
-## About Laravel
+The Student Locator project is designed to provide a platform for ingesting student data from a CSV file, storing it in a database, and then allowing users to search for nearby students based on their geographical coordinates. The backend is built with PHP Laravel, providing a robust foundation for API development, while the frontend utilizes the React framework to create an intuitive user interface.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Technology Stack
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   Backend: PHP Laravel
+-   Frontend: React
+-   Database: SQLite
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Project Setup
 
-## Learning Laravel
+1. **Download from GitHub**
+    - Clone this repository to your local machine.
+        ```bash
+        git clone https://github.com/sunyang-629/HospitalityConnect.git
+        ```
+2. **Laravel Setup**
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+    - Navigate to the root directory of your Laravel project.
+    - Install dependencies using Composer.
+        ```bash
+        composer install
+        ```
+    - Copy environment configuration file (`.env`) to root directory
+    - Run migrations to set up the database schema.
+        ```bash
+        php artisan migrate
+        ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+3. **Frontend Setup**
+    - Navigate to the root directory of your project.
+    - Install dependencies using npm or yarn.
+        ```bash
+        npm install
+        ```
+        or
+        ```bash
+        yarn install
+        ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Getting Started
 
-## Laravel Sponsors
+-   Navigate to the root directory of your Laravel project.
+-   Run Laravel Project
+    ```bash
+    ./vendor/bin/sail up
+    ```
+-   Run React Project
+    ```bash
+    npm run dev
+    ```
+-   The project will run on the port that you set as the APP_PORT in the .env file
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Core Functionality
 
-### Premium Partners
+### Backend (Laravel API)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+-   **`/api/students` (POST):**
+    -   Endpoint to ingest data from the CSV file and store it in the database.
+    -   Call it from Postman:
+    1. Set the request method to POST.
+    2. Enter the URL of your Laravel application followed by /api/students.
+    3. Go to the "Body" tab of the request.
+    4. Select the "form-data" option.
+    5. Add a new key-value pair where the key is file and the value is the CSV file you want to upload. Click on "Select Files" to upload the CSV file from your local system.
+    6. Click on the "Send" button to make the request.
+-   **`/api/students/nearby` (GET):**
+    -   Endpoint that accepts latitude, longitude, and radius as query parameters.
+    -   Responds with JSON data of students within the specified radius, including the calculated distance from the query point.
 
-## Contributing
+### Frontend
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+-   Search Nearby Students Page **`/students`**
+    -   A simple form with input fields to enter the user's latitude and longitude, and specify the desired search radius in kilometers.
+    -   Submit the form data to the `/api/students/nearby` endpoint.
+    -   Display the results in a clear list format, including student names and their distance from the user's location.
 
-## Code of Conduct
+## Key Design Decision
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+-   Laravel Sail: it simplifies the development environment setup by providing a Docker-based environment out of the box.
+-   SOLID: I made an effort to divide components according to the Single Responsibility Principle (SRP), ensuring that each component is responsible for a single functionality. This approach facilitates easier maintenance and future updates.
+-   React Hook Form: offers a lightweight and performant solution that leverages React hooks for managing form state and validation logic, resulting in cleaner code and improved user experience.
