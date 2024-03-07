@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import useStudentApi from "../apis/hooks/useStudentApi";
 import { StudentResponse } from "../model/students";
 import { useSnackbar } from "notistack";
-import { isAxiosError } from "axios";
+import { getErrorMessage } from "../utils/helper";
 
 const useStudents = () => {
     const { getNearbyStudents } = useStudentApi();
@@ -19,12 +19,8 @@ const useStudents = () => {
                 }
             ),
         onError: (err: Error) => {
-            if (isAxiosError<{ error: string }>(err)) {
-                const { error } = err.response?.data || {
-                    error: "unknown error",
-                };
-                enqueueSnackbar(error, { variant: "error" });
-            }
+            const error = getErrorMessage(err);
+            enqueueSnackbar(error, { variant: "error" });
         },
     });
 };
